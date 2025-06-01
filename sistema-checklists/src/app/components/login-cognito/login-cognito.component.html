@@ -1,0 +1,36 @@
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Login</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <amplify-authenticator [hideSignUp]="false" (authStateChange)="updateUser($event)">
+      <div class="auth-content">
+        <p class="login-prompt">Logado</p>
+        <div class="user-info" style="display: none;" [style.display]="user ? 'block' : 'none'">
+          <p><a [routerLink]="['/geral/geral']">Acessar Sistema</a></p>
+          <p>Serão visualizadas telas do sistema de Rastreamento</p>
+        </div>
+      </div>
+    </amplify-authenticator>
+  </div>
+</ng-template>
+
+<div class="loading-wrapper">
+  <div class="spinner" role="status" aria-label="Carregando..."></div>
+  <h1>Bem-vindo ao Sistema de Qualidade</h1>
+
+  <div class="info-slack">
+    🔐 <strong>Login:</strong> utilize as credenciais enviadas via Slack.<br />
+    Caso não tenha recebido, entre em contato com o suporte.
+  </div>
+
+  <p>Versão 0.000001</p>
+
+  <button class="btn btn-primary" (click)="entrar(content)">Fazer Login</button>
+
+  <div class="note">
+    Dúvidas? Contate:
+    <a href="mailto:julian&#64;dotelematics.com">julian&#64;dotelematics.com</a>
+  </div>
+</div>
