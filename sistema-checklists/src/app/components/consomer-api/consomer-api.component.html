@@ -1,83 +1,108 @@
 <div class="container">
-  <h1>Seções</h1>
+  <header>
+    <h1>Seções</h1>
+    <input
+      type="text"
+      [(ngModel)]="searchQuery"
+      (ngModelChange)="onSearch()"
+      placeholder="Buscar seções..."
+      [attr.aria-label]="'Buscar seções'"
+    />
+  </header>
 
-  @for (section of sections | keyvalue; track section.key) {
-    @if (shouldDisplaySection(section.value)) {
-      <div class="section">
-        <h2>{{ section.key }}</h2>
+  @if (filteredSections.length === 0) {
+    <p class="empty-state">Nenhuma seção encontrada.</p>
+  } @else {
+    <cdk-virtual-scroll-viewport itemSize="100" class="viewport">
+      @for (section of filteredSections; track section.key) {
+        @if (shouldDisplaySection(section.value)) {
+          <section class="section" [attr.aria-labelledby]="section.key + '-header'">
+            <h2 id="{{ section.key }}-header">{{ section.key }}</h2>
 
-        @if (hasComentarios(section.value)) {
-          <div class="comentarios">
-            <h3>Comentários</h3>
-            <ul>
-              @for (comentario of section.value.Comentarios; track $index) {
-                <li>{{ comentario }}</li>
-              }
-            </ul>
-          </div>
-        }
-
-        @if (hasFuncionalidades(section.value)) {
-          <div class="funcionalidades">
-            <h3>Funcionalidades</h3>
-            <ul>
-              @for (funcionalidade of section.value.Funcionalidades; track $index) {
-                <li>{{ funcionalidade }}</li>
-              }
-            </ul>
-          </div>
-        }
-
-        @if (hasSubsecoes(section.value)) {
-          <div class="subsecoes">
-            <h3>Subseções</h3>
-            <ul>
-              @for (subsecao of section.value.Subsecoes | keyvalue; track subsecao.key) {
-                <li>{{ subsecao.key }}</li>
-              }
-            </ul>
-          </div>
-        }
-
-        @if (hasTickets(section.value)) {
-          <div class="tickets">
-            <h3>Tickets</h3>
-            <ul>
-              @for (ticket of section.value.Tickets; track $index) {
-                <li>
-                  @if (isString(ticket)) {
-                    <span>{{ ticket }}</span>
-                  } @else {
-                    @if (ticket.descricao) {
-                      <div>
-                        @if (isString(ticket.descricao)) {
-                          <strong>{{ ticket.descricao }}</strong>
-                        } @else {
-                          <ul>
-                            @for (key of objectKeys(ticket.descricao); track key) {
-                              <li>{{ key }}: {{ ticket.descricao[key] }}</li>
-                            }
-                          </ul>
-                        }
-                      </div>
-                    }
-                    @if (ticket.articulacao_solucionar) {
-                      <div><em>{{ ticket.articulacao_solucionar }}</em></div>
-                    }
-                    @if (ticket.url_ticket) {
-                      <a [href]="ticket.url_ticket" target="_blank">Ver Ticket</a>
-                    }
+            @if (hasComentarios(section.value)) {
+              <article class="comentarios">
+                <h3>Comentários</h3>
+                <ul>
+                  @for (comentario of section.value.Comentarios; track $index) {
+                    <li>{{ comentario }}</li>
                   }
-                </li>
-              }
-            </ul>
-          </div>
-        }
+                </ul>
+              </article>
+            }
 
-        @if (hasUrl(section.value)) {
-          <a [href]="section.value.url" target="_blank">Abrir Módulo</a>
+            @if (hasFuncionalidades(section.value)) {
+              <article class="funcionalidades">
+                <h3>Funcionalidades</h3>
+                <ul>
+                  @for (funcionalidade of section.value.Funcionalidades; track $index) {
+                    <li>{{ funcionalidade }}</li>
+                  }
+                </ul>
+              </article>
+            }
+
+            @if (hasSubsecoes(section.value)) {
+              <article class="subsecoes">
+                <h3>Subseções</h3>
+                <ul>
+                  @for (subsecao of section.value.Subsecoes | keyvalue; track subsecao.key) {
+                    <li>{{ subsecao.key }}</li>
+                  }
+                </ul>
+              </article>
+            }
+
+            @if (hasTickets(section.value)) {
+              <article class="tickets">
+                <h3>Tickets</h3>
+                <ul>
+                  @for (ticket of section.value.Tickets; track $index) {
+                    <li>
+                      @if (isString(ticket)) {
+                        <span>{{ ticket }}</span>
+                      } @else {
+                        @if (ticket.descricao) {
+                          <div>
+                            @if (isString(ticket.descricao)) {
+                              <strong>{{ ticket.descricao }}</strong>
+                            } @else {
+                              <ul>
+                                @for (key of objectKeys(ticket.descricao); track key) {
+                                  <li>{{ key }}: {{ ticket.descricao[key] }}</li>
+                                }
+                              </ul>
+                            }
+                          </div>
+                        }
+                        @if (ticket.articulacao_solucionar) {
+                          <div><em>{{ ticket.articulacao_solucionar }}</em></div>
+                        }
+                        @if (ticket.url_ticket) {
+                          <a
+                            [href]="ticket.url_ticket"
+                            target="_blank"
+                            [attr.aria-label]="'Abrir ticket ' + (ticket.descricao | json)"
+                            >Ver Ticket</a
+                          >
+                        }
+                      }
+                    </li>
+                  }
+                </ul>
+              </article>
+            }
+
+            @if (hasUrl(section.value)) {
+              <a
+                [href]="section.value.url"
+                target="_blank"
+                [attr.aria-label]="'Abrir módulo ' + section.key"
+                >Abrir Módulo</a
+              >
+            }
+          </section>
         }
-      </div>
-    }
+      }
+    </cdk-virtual-scroll-viewport>
   }
 </div>

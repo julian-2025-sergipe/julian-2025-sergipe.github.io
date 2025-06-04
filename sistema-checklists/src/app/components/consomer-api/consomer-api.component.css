@@ -1,7 +1,21 @@
 .container {
-  max-width: 800px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+input[type="text"] {
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  width: 300px;
 }
 
 .section {
@@ -9,21 +23,22 @@
   padding: 15px;
   border: 1px solid #ddd;
   border-radius: 5px;
+  background-color: var(--bg-color, #fff);
 }
 
 h1 {
   font-size: 24px;
-  margin-bottom: 20px;
+  margin: 0;
 }
 
 h2 {
   font-size: 20px;
-  color: #333;
+  color: var(--text-color, #333);
 }
 
 h3 {
   font-size: 16px;
-  color: #555;
+  color: var(--text-secondary, #555);
   margin-top: 10px;
 }
 
@@ -38,7 +53,7 @@ li {
 }
 
 a {
-  color: #007bff;
+  color: var(--link-color, #007bff);
   text-decoration: none;
 }
 
@@ -47,15 +62,51 @@ a:hover {
 }
 
 em {
-  color: #666;
+  color: var(--text-muted, #666);
   font-style: italic;
 }
 
-.comentarios, .funcionalidades, .subsecoes, .tickets {
-  margin-top: 10px;
+.empty-state {
+  text-align: center;
+  color: var(--text-muted, #888);
+  font-style: italic;
 }
 
-p {
-  color: #888;
-  font-style: italic;
+.viewport {
+  height: 600px;
+  overflow-y: auto;
+}
+
+/* Suporte a temas */
+:root {
+  --bg-color: #fff;
+  --text-color: #333;
+  --text-secondary: #555;
+  --text-muted: #666;
+  --link-color: #007bff;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-color: #1a1a1a;
+    --text-color: #e0e0e0;
+    --text-secondary: #b0b0b0;
+    --text-muted: #888;
+    --link-color: #4da8ff;
+  }
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .container {
+    padding: 10px;
+  }
+
+  input[type="text"] {
+    width: 100%;
+  }
+
+  .section {
+    padding: 10px;
+  }
 }

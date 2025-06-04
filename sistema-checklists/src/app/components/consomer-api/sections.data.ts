@@ -12,6 +12,8 @@ export interface Section {
   url?: string;
 }
 
+
+
 export const sections: Readonly<Record<string, Section>> = {
   Abastecimento: {
     Comentarios: [
