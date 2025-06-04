@@ -5,7 +5,6 @@ import { JanelaModalClassificarComponent } from '../janela-modal-classificar/jan
 import { ModalLoginComponent } from '../modal-login/modal-login.component';
 import { timer, Subscription } from 'rxjs';
 import { ListaPastasComponent } from '../lista-pastas/lista-pastas.component';
-import { ConsomerApiComponent } from '../consomer-api/consomer-api.component';
 
 
 
@@ -20,7 +19,7 @@ enum KEY_CODE {
 @Component({
   selector: 'app-novos',
   standalone: true,
-  imports: [JanelaModalClassificarComponent, ListaPastasComponent, ModalLoginComponent,ConsomerApiComponent],
+  imports: [JanelaModalClassificarComponent, ListaPastasComponent, ModalLoginComponent],
   templateUrl: './novos.component.html',
   styles: []
 })
