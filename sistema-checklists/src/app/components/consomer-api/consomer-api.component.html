@@ -1,0 +1,43 @@
+<div class="container">
+  <h1>Seções com Tickets</h1>
+
+  @for (section of sections | keyvalue; track section.key) {
+    @if (hasTickets(section.value)) {
+      <div class="section">
+        <h2>{{ section.key }}</h2>
+        <ul>
+          @for (ticket of section.value.Tickets; track $index) {
+            <li>
+              @if (isString(ticket)) {
+                <span>{{ ticket }}</span>
+              } @else {
+                @if (ticket.descricao) {
+                  <div>
+                    @if (isString(ticket.descricao)) {
+                      <strong>{{ ticket.descricao }}</strong>
+                    } @else {
+                      <ul>
+                        @for (key of objectKeys(ticket.descricao); track key) {
+                          <li>{{ key }}: {{ ticket.descricao[key] }}</li>
+                        }
+                      </ul>
+                    }
+                  </div>
+                }
+                @if (ticket.articulacao_solucionar) {
+                  <div><em>{{ ticket.articulacao_solucionar }}</em></div>
+                }
+                @if (ticket.url_ticket) {
+                  <a [href]="ticket.url_ticket" target="_blank">Ver Ticket</a>
+                }
+              }
+            </li>
+          }
+        </ul>
+        @if (section.value.url) {
+          <a [href]="section.value.url" target="_blank">Abrir Módulo</a>
+        }
+      </div>
+    }
+  }
+</div>

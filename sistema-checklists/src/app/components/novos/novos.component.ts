@@ -5,6 +5,9 @@ import { JanelaModalClassificarComponent } from '../janela-modal-classificar/jan
 import { ModalLoginComponent } from '../modal-login/modal-login.component';
 import { timer, Subscription } from 'rxjs';
 import { ListaPastasComponent } from '../lista-pastas/lista-pastas.component';
+import { ConsomerApiComponent } from '../consomer-api/consomer-api.component';
+
+
 
 // Definindo as constantes para os códigos de tecla
 enum KEY_CODE {
@@ -17,7 +20,7 @@ enum KEY_CODE {
 @Component({
   selector: 'app-novos',
   standalone: true,
-  imports: [JanelaModalClassificarComponent, ListaPastasComponent, ModalLoginComponent],
+  imports: [JanelaModalClassificarComponent, ListaPastasComponent, ModalLoginComponent,ConsomerApiComponent],
   templateUrl: './novos.component.html',
   styles: []
 })
