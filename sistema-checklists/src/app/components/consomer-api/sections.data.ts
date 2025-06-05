@@ -148,7 +148,7 @@ export const sections: Readonly<Record<string, Section>> = {
   },
   "Cursos": {
     "Comentarios": [
-      "O log aponta dois avisos de aninhamento inválido no componente AcademyTabComponent, onde elementos <div> e <fieldset> estão sendo usados como descendentes de <p>, o que viola as regras de validação de HTML do React. É necessário revisar a estrutura do componente AcademyTabComponent e CoursesTab para corrigir o aninhamento, possivelmente substituindo <p> por um elemento mais apropriado, como <div>.    Os elementos <div> e <fieldset> não estão mais aninhados dentro de <p> no componente AcademyTabComponent.    Os avisos \"Warning: alidateDOMNesting(...): %s cannot appear as a descendant of <%s>...\" não aparecem mais no console.    A renderização visual do componente não é afetada negativamente.Referência no Log: \"Warning: validateDOMNesting(...): %s cannot appear as a descendant of <%s>.%s <div> p ...\" e \"Warning: validateDOMNesting(...): %s cannot appear as a descendant of <%s>.%s <fieldset> p ...\"."
+      "O log aponta \"              ."
     ],
     "Funcionalidades": [],
     "Subsecoes": {},
@@ -158,7 +158,7 @@ export const sections: Readonly<Record<string, Section>> = {
   },
   "Empresas": {
     "Comentarios": [
-      "Arthur falou de: 1) mudanca de empresa, 2) comportamento dos relacionamentos apos edicao e exclusao",
+      "Arthur falou de: 1) mudanca de empresa, 2) comportamento dos relacionamentos apos edicao e exclusao. Julian Observando: 1) Permite cadastra com apenas o NOME. 2) Não permite visuliazr , com clareza, o erro quando se tenta duplicar o nome (apesar que a API responde explica a tentativa de duplicata). 3) Observando que permite registrar como Financeira sem ter tocado (erro Fantasma: aparece e desaparece) o botão (binario) de Financeira. 4) ",
     ],
     "Funcionalidades": [],
     "Subsecoes": {},
@@ -305,7 +305,7 @@ export const sections: Readonly<Record<string, Section>> = {
   },
   "Identificadores": {
     "Comentarios": [
-      "é possível cadastrar ibuttons com codigos ja existentes"
+      "é possível cadastrar ibuttons com codigos ja existentes. Lembrar que no ticket DEV-174 (https://linear.app/dotelematics/issue/DEV-174/impedir-que-seja-possivel-vincular-ibuttons-e-motoristas-de-empresas) Fernanda tinha feito: Feito a validação na api e também modificado o front para que as opções no select de motorista sejam somente motoristas da empresa selecionada. Lembrar do falso DELETE: https://github.com/marine-br/api/pull/969"
     ],
     "Funcionalidades": [],
     "Subsecoes": {},
@@ -313,13 +313,17 @@ export const sections: Readonly<Record<string, Section>> = {
       {
         "descricao": {
           "codigos_existentes": "é possível cadastrar ibuttons com codigos ja existentes",
-          "desvinculo_automatico": "ao mudar empresa do ibutton nao desvincula o motorista",
-          "vincular_motoristas_ibutton_livre": "é possivel vincular motoristas com ibuttons que náo estao vinculados"
-        },
+          "desvinculo_automatico": "ao mudar empresa do ibutton nao desvincula o motorista ( Lembrar do falso DELETE: https://github.com/marine-br/api/pull/969)",
+          "vincular_motoristas_ibutton_livre": "é possivel vincular motoristas com ibuttons que náo estao vinculados",
+        "verificar_SELECT":"quando se ingresa na tela pura (https://stagging.dotelematics.com/fleet/ibuttons), ele apresenta muitos motoristas sem PREVIAMENTE filtrar por empresa"        ,
+        "aprimorar_editor_ibutttons":"ele permite edição massiva ???"
+      },
+
         "url_ticket": "https://linear.app/dotelematics/issue/DEV-152/revisao-da-plataforma"
       }
     ],
-    "url": "https://stagging.dotelematics.com/fleet/ibuttons", "tela": "---------https://cv-julian-2025.s3.us-east-1.amazonaws.com/ux-2025/images-telas/16.png"
+    "url": "https://stagging.dotelematics.com/fleet/ibuttons", 
+    "tela": "https://cv-julian-2025.s3.us-east-1.amazonaws.com/ux-2025/images-telas/17.png"
   },
   "Link_Publico": {
     "Comentarios": [],
