@@ -6,7 +6,9 @@ import { ConsomerApiComponent } from './components/consomer-api/consomer-api.com
 import { AuthGuardService } from './services/auth-cognito/auth.guard.service'; // Importe o guarda
 
 export const routes: Routes = [
-  { path: 'consomer', component: ConsomerApiComponent },
+  { path: 'consomer', component: ConsomerApiComponent,
+    canActivate: [AuthGuardService] // Protege a rota com o guarda
+   },
   { path: 'login', component: LoginCognitoComponent },
   { 
     path: ':parametro/:parametro', 
