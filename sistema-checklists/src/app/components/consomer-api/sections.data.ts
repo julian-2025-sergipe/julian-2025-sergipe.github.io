@@ -10,6 +10,7 @@ export interface Section {
   Subsecoes?: Record<string, Section>;
   Tickets?: (string | Ticket)[];
   url?: string;
+  tela?: string;
 }
 
 
@@ -28,12 +29,14 @@ export const sections: Readonly<Record<string, Section>> = {
         "url_ticket": "https://linear.app/dotelematics/issue/DEV-152/revisao-da-plataforma"
       }
     ],
-    "url": "https://stagging.dotelematics.com/fleet/fuel-supply"
+    "url": "https://stagging.dotelematics.com/fleet/fuel-supply",
+    "tela": "https://cv-julian-2025.s3.us-east-1.amazonaws.com/ux-2025/images-telas/16.png"
   },
   "aulas": {
     "Comentarios": [],
     "Tickets": [],
-    "url": "https://stagging.dotelematics.com/academy/lessons"
+    "url": "https://stagging.dotelematics.com/academy/lessons",
+    "tela": "https://cv-julian-2025.s3.us-east-1.amazonaws.com/ux-2025/images-telas/2.png"
   },
   "Barcos": {
     "Comentarios": [
@@ -48,7 +51,7 @@ export const sections: Readonly<Record<string, Section>> = {
         "url_ticket": "https://linear.app/dotelematics/issue/DEV-152/revisao-da-plataforma"
       }
     ],
-    "url": "https://stagging.dotelematics.com/marine/ships"
+    "url": "https://stagging.dotelematics.com/marine/ships", "tela": "---------https://cv-julian-2025.s3.us-east-1.amazonaws.com/ux-2025/images-telas/16.png"
   },
   "Cerca_administracao": {
     "Comentarios": [],
@@ -72,7 +75,7 @@ export const sections: Readonly<Record<string, Section>> = {
         "url_ticket": "https://linear.app/dotelematics/issue/DEV-152/revisao-da-plataforma"
       }
     ],
-    "url": "https://stagging.dotelematics.com/geo-fence/report"
+    "url": "https://stagging.dotelematics.com/geo-fence/report", "tela": "---------https://cv-julian-2025.s3.us-east-1.amazonaws.com/ux-2025/images-telas/16.png"
   },
   "Cerca_Virtual": {
     "Comentarios": [],
@@ -103,7 +106,7 @@ export const sections: Readonly<Record<string, Section>> = {
         "url_ticket": "https://linear.app/dotelematics/issue/DEV-152/revisao-da-plataforma"
       }
     ],
-    "url": "https://stagging.dotelematics.com/geo-fence/manage?page=1&limit=10"
+    "url": "https://stagging.dotelematics.com/geo-fence/manage?page=1&limit=10", "tela": "---------https://cv-julian-2025.s3.us-east-1.amazonaws.com/ux-2025/images-telas/16.png"
   },
   "Comandos": {
 
@@ -140,7 +143,8 @@ export const sections: Readonly<Record<string, Section>> = {
         "url_ticket": "https://linear.app/dotelematics/issue/DEV-152/revisao-da-plataforma"
       }
     ],
-    "url": "https://stagging.dotelematics.com/commands/schedule-commands?page=1&limit=100"
+    "url": "https://stagging.dotelematics.com/commands/schedule-commands?page=1&limit=100",
+    "tela": "https://cv-julian-2025.s3.us-east-1.amazonaws.com/ux-2025/images-telas/4.png"
   },
   "Cursos": {
     "Comentarios": [
@@ -149,16 +153,18 @@ export const sections: Readonly<Record<string, Section>> = {
     "Funcionalidades": [],
     "Subsecoes": {},
     "Tickets": [],
-    "url": "https://stagging.dotelematics.com/academy/courses"
+    "url": "https://stagging.dotelematics.com/academy/courses",
+    "tela": "https://cv-julian-2025.s3.us-east-1.amazonaws.com/ux-2025/images-telas/1.png"
   },
   "Empresas": {
-    "Comentarios": [      
-        "Arthur falou de: 1) mudanca de empresa, 2) comportamento dos relacionamentos apos edicao e exclusao",      
+    "Comentarios": [
+      "Arthur falou de: 1) mudanca de empresa, 2) comportamento dos relacionamentos apos edicao e exclusao",
     ],
     "Funcionalidades": [],
     "Subsecoes": {},
     "Tickets": [],
-    "url": "https://stagging.dotelematics.com/admin/company"
+    "url": "https://stagging.dotelematics.com/admin/company",
+    "tela": "https://cv-julian-2025.s3.us-east-1.amazonaws.com/ux-2025/images-telas/5.png"
   },
   "Eventos_finalizados": {
     "Comentarios": [],
@@ -180,7 +186,7 @@ export const sections: Readonly<Record<string, Section>> = {
     "Tickets": [
       "O log exibe vários avisos relacionados ao uso simultâneo das propriedades checked e defaultChecked em elementos de entrada do tipo checkbox (x.: Styled(input) checkbox). Isso viola as práticas recomendadas do React, que exige que um componente de entrada seja exclusivamente ontrolado (usando checked) ou não controlado (usando defaultChecked). É necessário revisar os componentes mencionados, como SwitchShowFilters, e decidir entre usar um componente controlado ou não controlado, removendo a propriedade conflitante.    Os componentes de checkbox identificados (SwitchShowFilters, etc.) utilizam apenas checked ou defaultChecked, conforme a necessidade do caso de uso.    O aviso \"Warning: %s contains an input of type %s with both checked and defaultChecked props\" não aparece mais no console.    A funcionalidade dos checkboxes não é comprometida após a correção.Referência no Log: Mensagens como \"Warning: %s contains an input of type %s with both checked and defaultChecked props...\"."
     ],
-    "url": "https://stagging.dotelematics.com/monitoring/events?page=1&limit=100"
+    "url": "https://stagging.dotelematics.com/monitoring/events?page=1&limit=100", "tela": "---------https://cv-julian-2025.s3.us-east-1.amazonaws.com/ux-2025/images-telas/16.png"
   },
   "Frotas": {
     "Comentarios": [],
@@ -235,6 +241,7 @@ export const sections: Readonly<Record<string, Section>> = {
     },
     "Tickets": [],
     "url": "https://stagging.dotelematics.com/fleet/fleets",
+    "tela": "---------https://cv-julian-2025.s3.us-east-1.amazonaws.com/ux-2025/images-telas/16.png"
 
   },
   "Histórico": {
@@ -264,7 +271,7 @@ export const sections: Readonly<Record<string, Section>> = {
         "url_ticket": "https://linear.app/dotelematics/issue/DEV-152/revisao-da-plataforma"
       }
     ],
-    "url": "https://stagging.dotelematics.com/commands/history-commands"
+    "url": "https://stagging.dotelematics.com/commands/history-commands", "tela": "---------https://cv-julian-2025.s3.us-east-1.amazonaws.com/ux-2025/images-telas/16.png"
   },
   "Historico_Regras": {
     "Comentarios": [],
@@ -277,14 +284,15 @@ export const sections: Readonly<Record<string, Section>> = {
         "url_ticket": "https://linear.app/dotelematics/issue/DEV-152/revisao-da-plataforma"
       }
     ],
-    "url": "https://stagging.dotelematics.com/ruler-history?page=1&limit=100"
+    "url": "https://stagging.dotelematics.com/ruler-history?page=1&limit=100", "tela": "---------https://cv-julian-2025.s3.us-east-1.amazonaws.com/ux-2025/images-telas/16.png"
   },
   "Horarios_permitidos": {
     "Comentarios": [],
     "Funcionalidades": [],
     "Subsecoes": {},
     "Tickets": [],
-    "url": "https://stagging.dotelematics.com/admin/access-period?limit=100&page=1"
+    "url": "https://stagging.dotelematics.com/admin/access-period?limit=100&page=1",
+    "tela": "https://cv-julian-2025.s3.us-east-1.amazonaws.com/ux-2025/images-telas/3.png"
   },
   "Identificador_Regras": {
     "Comentarios": [],
@@ -297,7 +305,7 @@ export const sections: Readonly<Record<string, Section>> = {
   },
   "Identificadores": {
     "Comentarios": [
-      "é possível cadastrar ibuttons com codigos ja existentes"      
+      "é possível cadastrar ibuttons com codigos ja existentes"
     ],
     "Funcionalidades": [],
     "Subsecoes": {},
@@ -311,7 +319,7 @@ export const sections: Readonly<Record<string, Section>> = {
         "url_ticket": "https://linear.app/dotelematics/issue/DEV-152/revisao-da-plataforma"
       }
     ],
-    "url": "https://stagging.dotelematics.com/fleet/ibuttons"
+    "url": "https://stagging.dotelematics.com/fleet/ibuttons", "tela": "---------https://cv-julian-2025.s3.us-east-1.amazonaws.com/ux-2025/images-telas/16.png"
   },
   "Link_Publico": {
     "Comentarios": [],
@@ -324,7 +332,7 @@ export const sections: Readonly<Record<string, Section>> = {
         "url_ticket": "https://linear.app/dotelematics/issue/DEV-152/revisao-da-plataforma"
       }
     ],
-    "url": "https://stagging.dotelematics.com/public-link"
+    "url": "https://stagging.dotelematics.com/public-link", "tela": "---------https://cv-julian-2025.s3.us-east-1.amazonaws.com/ux-2025/images-telas/16.png"
   },
   "Manutencao_relatorio": {
     "Comentarios": [
@@ -339,7 +347,7 @@ export const sections: Readonly<Record<string, Section>> = {
         "url_ticket": "https://linear.app/dotelematics/issue/DEV-152/revisao-da-plataforma"
       }
     ],
-    "url": "https://stagging.dotelematics.com/maintenance/report"
+    "url": "https://stagging.dotelematics.com/maintenance/report", "tela": "---------https://cv-julian-2025.s3.us-east-1.amazonaws.com/ux-2025/images-telas/16.png"
   },
   "Manutencoes": {
     "Comentarios": [],
@@ -352,7 +360,7 @@ export const sections: Readonly<Record<string, Section>> = {
         "url_ticket": "https://linear.app/dotelematics/issue/DEV-152/revisao-da-plataforma"
       }
     ],
-    "url": "https://stagging.dotelematics.com/maintenance/list?page=1&limit=100"
+    "url": "https://stagging.dotelematics.com/maintenance/list?page=1&limit=100", "tela": "---------https://cv-julian-2025.s3.us-east-1.amazonaws.com/ux-2025/images-telas/16.png"
   },
   "Mapa": {
     "Comentarios": [],
@@ -377,7 +385,7 @@ export const sections: Readonly<Record<string, Section>> = {
             "url_ticket": "https://linear.app/dotelematics/issue/DEV-152/revisao-da-plataforma"
           }
         ],
-        "url": ""
+        "url": "", "tela": "---------https://cv-julian-2025.s3.us-east-1.amazonaws.com/ux-2025/images-telas/16.png"
       }
     },
     "Tickets": [],
@@ -415,7 +423,7 @@ export const sections: Readonly<Record<string, Section>> = {
         "url_ticket": "https://linear.app/dotelematics/issue/DEV-152/revisao-da-plataforma"
       }
     ],
-    "url": "https://stagging.dotelematics.com/monitoring/settings?page=1&limit=100"
+    "url": "https://stagging.dotelematics.com/monitoring/settings?page=1&limit=100", "tela": "---------https://cv-julian-2025.s3.us-east-1.amazonaws.com/ux-2025/images-telas/16.png"
   },
   "Monitoramento_Monitoramento": {
     "Comentarios": [],
@@ -428,7 +436,7 @@ export const sections: Readonly<Record<string, Section>> = {
         "url_ticket": "https://linear.app/dotelematics/issue/DEV-152/revisao-da-plataforma"
       }
     ],
-    "url": "https://stagging.dotelematics.com/monitoring/monitoring"
+    "url": "https://stagging.dotelematics.com/monitoring/monitoring", "tela": "---------https://cv-julian-2025.s3.us-east-1.amazonaws.com/ux-2025/images-telas/16.png"
   },
   "Motoristas": {
     "Comentarios": [],
@@ -455,19 +463,21 @@ export const sections: Readonly<Record<string, Section>> = {
         "url_ticket": "https://linear.app/dotelematics/issue/DEV-152/revisao-da-plataforma"
       }
     ],
-    "url": "https://stagging.dotelematics.com/panels"
+    "url": "https://stagging.dotelematics.com/panels", "tela": "---------https://cv-julian-2025.s3.us-east-1.amazonaws.com/ux-2025/images-telas/16.png"
   },
   "Perfis": {
     "Comentarios": [],
     "Funcionalidades": [],
     "Subsecoes": {},
     "Tickets": [],
-    "url": "https://stagging.dotelematics.com/admin/profiles?page=1&limit=100"
+    "url": "https://stagging.dotelematics.com/admin/profiles?page=1&limit=100",
+    "tela": "https://cv-julian-2025.s3.us-east-1.amazonaws.com/ux-2025/images-telas/8.png"
   },
   "Permisões": {
     "Comentarios": [],
     "Tickets": [],
-    "url": "https://stagging.dotelematics.com/admin/permissions?page=1&limit=100"
+    "url": "https://stagging.dotelematics.com/admin/permissions?page=1&limit=100",
+    "tela": "https://cv-julian-2025.s3.us-east-1.amazonaws.com/ux-2025/images-telas/7.png"
   },
   "Real_time": {
     "Comentarios": [],
@@ -476,12 +486,12 @@ export const sections: Readonly<Record<string, Section>> = {
     "Tickets": [
       "O log indica um aviso de que a propriedade backGroundColor não é reconhecida pelo React em um elemento DOM (div). O React sugere usar backgroundColor (em letras minúsculas) como atributo personalizado. É necessário localizar o componente que está passando backGroundColor (possivelmente em FilterContainer ou HookedScheduleCommandStatus) e corrigir para backgroundColor ou remover a propriedade, se não for intencional.    A propriedade backGroundColor é corrigida para backgroundColor ou removida, conforme apropriado.    O aviso \"Warning: React does not recognize the backGroundColor prop on a DOM element...\" não aparece mais no console.     A estilização do componente não é afetada negativamente."
     ],
-    "url": "https://stagging.dotelematics.com/realtime"
+    "url": "https://stagging.dotelematics.com/realtime", "tela": "---------https://cv-julian-2025.s3.us-east-1.amazonaws.com/ux-2025/images-telas/16.png"
   },
   "Regras": {
     "Comentarios": [
-      
-        "Verificar se há mensagens de erro no console ao tentar abrir a página de regras."
+
+      "Verificar se há mensagens de erro no console ao tentar abrir a página de regras."
     ],
     "Funcionalidades": [],
     "Subsecoes": {},
@@ -491,7 +501,7 @@ export const sections: Readonly<Record<string, Section>> = {
         "url_ticket": "https://linear.app/dotelematics/issue/DEV-152/revisao-da-plataforma"
       }
     ],
-    "url": "https://stagging.dotelematics.com/ruler?page=1&limit=100"
+    "url": "https://stagging.dotelematics.com/ruler?page=1&limit=100", "tela": "---------https://cv-julian-2025.s3.us-east-1.amazonaws.com/ux-2025/images-telas/16.png"
   },
   "Relatórios": {
 
@@ -544,7 +554,7 @@ export const sections: Readonly<Record<string, Section>> = {
           },
         },
         "Tickets": [],
-        "url": ""
+        "url": "", "tela": "---------https://cv-julian-2025.s3.us-east-1.amazonaws.com/ux-2025/images-telas/16.png"
       }
     },
     "Tickets": [
@@ -578,7 +588,7 @@ export const sections: Readonly<Record<string, Section>> = {
         "articulacao_solucionar": "Conversar com o Sr. Alan e determinar melhor forma de abrir o Ticket"
       }
     ],
-    "url": "https://stagging.dotelematics.com/reports/events"
+    "url": "https://stagging.dotelematics.com/reports/events", "tela": "---------https://cv-julian-2025.s3.us-east-1.amazonaws.com/ux-2025/images-telas/16.png"
   },
   "Relatorios_Faturamentos": {
     "Comentarios": [],
@@ -605,7 +615,7 @@ export const sections: Readonly<Record<string, Section>> = {
         "url_ticket": ""
       }
     ],
-    "url": "https://stagging.dotelematics.com/reports/trips"
+    "url": "https://stagging.dotelematics.com/reports/trips", "tela": "---------https://cv-julian-2025.s3.us-east-1.amazonaws.com/ux-2025/images-telas/16.png"
   },
   "Relatorios_Operadores": {
     "Comentarios": [],
@@ -631,7 +641,7 @@ export const sections: Readonly<Record<string, Section>> = {
         "url_ticket": "https://linear.app/dotelematics/issue/DEV-152/revisao-da-plataforma"
       }
     ],
-    "url": "https://stagging.dotelematics.com/reports/tracker-metrics"
+    "url": "https://stagging.dotelematics.com/reports/tracker-metrics", "tela": "---------https://cv-julian-2025.s3.us-east-1.amazonaws.com/ux-2025/images-telas/16.png"
   },
   "Sessoes": {
     "Comentarios": [],
@@ -651,7 +661,7 @@ export const sections: Readonly<Record<string, Section>> = {
     "Tickets": [
       "verificar condição de Login para redirecionamento"
     ],
-    "url": "https://stagging.dotelematics.com/sign-in"
+    "url": "https://stagging.dotelematics.com/sign-in", "tela": "---------https://cv-julian-2025.s3.us-east-1.amazonaws.com/ux-2025/images-telas/16.png"
   },
   "Urls": {
     "Comentarios": [],
@@ -669,7 +679,8 @@ export const sections: Readonly<Record<string, Section>> = {
     "Tickets": [
       "O React recomenda usar uma string vazia (\"\") para limpar o componente ou undefined para componentes não controlados. É necessário revisar os componentes, como MapFilters e TrackerList, para garantir que a propriedade value seja definida corretamente.    Todos os elementos input identificados têm a propriedade value definida como string vazia ou undefined, conforme apropriado.    O aviso \"Warning: value prop on %s should not be null...\" não aparece mais no console.    A funcionalidade dos campos de entrada não é comprometida."
     ],
-    "url": "https://stagging.dotelematics.com/admin/users"
+    "url": "https://stagging.dotelematics.com/admin/users",
+    "tela": "https://cv-julian-2025.s3.us-east-1.amazonaws.com/ux-2025/images-telas/11.png"
   },
   "veiculos": {
     "Comentarios": [
@@ -682,6 +693,7 @@ export const sections: Readonly<Record<string, Section>> = {
         "url_ticket": "https://linear.app/dotelematics/issue/DEV-152/revisao-da-plataforma"
       }
     ],
-    "url": "https://stagging.dotelematics.com/fleet/vehicles"
+    "url": "https://stagging.dotelematics.com/fleet/vehicles",
+    "tela": "https://cv-julian-2025.s3.us-east-1.amazonaws.com/ux-2025/images-telas/18.png"
   }
 };
