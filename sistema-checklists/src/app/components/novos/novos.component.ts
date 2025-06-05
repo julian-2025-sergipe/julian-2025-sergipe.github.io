@@ -6,6 +6,7 @@ import { ModalLoginComponent } from '../modal-login/modal-login.component';
 import { timer, Subscription } from 'rxjs';
 import { ListaPastasComponent } from '../lista-pastas/lista-pastas.component';
 
+import {TicketsComponent} from '../tickets/tickets.component';
 
 
 // Definindo as constantes para os códigos de tecla
@@ -19,7 +20,7 @@ enum KEY_CODE {
 @Component({
   selector: 'app-novos',
   standalone: true,
-  imports: [JanelaModalClassificarComponent, ListaPastasComponent, ModalLoginComponent],
+  imports: [JanelaModalClassificarComponent, ListaPastasComponent, ModalLoginComponent,TicketsComponent],
   templateUrl: './novos.component.html',
   styles: []
 })

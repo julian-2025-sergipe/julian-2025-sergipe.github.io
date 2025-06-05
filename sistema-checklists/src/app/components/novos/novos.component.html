@@ -54,7 +54,12 @@
 
     <nav class="navbar navbar-dark bg-dark box-shadow">
       <div class="container d-flex justify-content-between">
-        <app-lista-pastas></app-lista-pastas>
+        
+<div >
+  <div><app-lista-pastas></app-lista-pastas></div>
+  <div><app-tickets></app-tickets></div>
+</div>
+
 
         
         <app-modal-login (authStateChange)="handleAuthStateChange($event)">

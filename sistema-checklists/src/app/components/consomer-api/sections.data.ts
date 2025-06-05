@@ -18,7 +18,7 @@ export interface Section {
 export const sections: Readonly<Record<string, Section>> = {
   "Abastecimento": {
     "Comentarios": [
-      "O log aponta dois avisos de aninhamento inválido no componente AcademyTabComponent, onde elementos <div> e <fieldset> estão sendo usados como descendentes de <p>, o que viola as regras de validação de HTML do React. É necessário revisar a estrutura do componente AcademyTabComponent e CoursesTab para corrigir o aninhamento, possivelmente substituindo <p> por um elemento mais apropriado, como <div>.    Os elementos <div> e <fieldset> não estão mais aninhados dentro de <p> no componente AcademyTabComponent.    Os avisos \"Warning: alidateDOMNesting(...): %s cannot appear as a descendant of <%s>...\" não aparecem mais no console.    A renderização visual do componente não é afetada negativamente.Referência no Log: \"Warning: validateDOMNesting(...): %s cannot appear as a descendant of <%s>.%s <div> p ...\" e \"Warning: validateDOMNesting(...): %s cannot appear as a descendant of <%s>.%s <fieldset> p ...\"."
+      ""
     ],
     "Funcionalidades": [],
     "Subsecoes": {},
