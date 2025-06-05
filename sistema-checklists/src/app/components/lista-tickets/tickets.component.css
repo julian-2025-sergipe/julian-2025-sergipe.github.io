@@ -1,11 +1,11 @@
-    .btn-custom {
-      background-color: #fff; /* Botão branco */
-      color: #000; /* Texto preto */
-      border: none;
-    }
-    .btn-custom:hover {
-      background-color: #fff; /* Mantém a cor de fundo no hover */
-      color: #000; /* Mantém a cor do texto no hover */
-      box-shadow: none; /* Remove sombra adicional no hover */
-    }
+.btn-custom {
+  background-color: #b9c512 !important;
+  color: #000 !important;
+  border: none !important;
+}
 
+.btn-custom:hover {
+  background-color: #b61919 !important;
+  color: #000 !important;
+  box-shadow: none !important;
+}
