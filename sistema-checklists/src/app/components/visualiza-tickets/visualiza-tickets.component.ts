@@ -1,3 +1,4 @@
+
 import { Component, HostListener, OnInit, signal, DestroyRef, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { GetFotosBucketService } from '../../services/get-fotos-bucket/get-fotos-bucket.service';
@@ -9,6 +10,7 @@ import { ListaPastasComponent } from '../lista-pastas/lista-pastas.component';
 import {ListaTicketsComponent} from '../lista-tickets/tickets.component';
 
 
+
 // Definindo as constantes para os códigos de tecla
 enum KEY_CODE {
   RIGHT_ARROW = 'ArrowRight',
@@ -18,13 +20,15 @@ enum KEY_CODE {
 }
 
 @Component({
-  selector: 'app-novos',
-  standalone: true,
+  selector: 'app-visualiza-tickets',
   imports: [JanelaModalClassificarComponent, ListaPastasComponent, ModalLoginComponent,ListaTicketsComponent],
-  templateUrl: './novos.component.html',
-  styles: []
+  templateUrl: './visualiza-tickets.component.html',
+  styleUrl: './visualiza-tickets.component.css'
 })
-export class NovosComponent implements OnInit {
+
+
+
+export class VisualizaTicketsComponent implements OnInit {
   etiqueta = signal('geral');
   indice_imagen = signal(0);
   maximo_indice_imagen = signal(0);
