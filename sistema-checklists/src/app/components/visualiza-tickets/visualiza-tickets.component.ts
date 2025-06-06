@@ -1,13 +1,19 @@
 
 import { Component, HostListener, OnInit, signal, DestroyRef, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { GetFotosBucketService } from '../../services/get-fotos-bucket/get-fotos-bucket.service';
+
+import { GetSectionsService } from '../../services/getSections/get-sections.service';
+
+//import { GetFotosBucketService } from '../../services/get-fotos-bucket/get-fotos-bucket.service';
+
+
+
 import { JanelaModalClassificarComponent } from '../janela-modal-classificar/janela-modal-classificar.component';
 import { ModalLoginComponent } from '../modal-login/modal-login.component';
 import { timer, Subscription } from 'rxjs';
 import { ListaPastasComponent } from '../lista-pastas/lista-pastas.component';
 
-import {ListaTicketsComponent} from '../lista-tickets/tickets.component';
+import { ListaTicketsComponent } from '../lista-tickets/tickets.component';
 
 
 
@@ -21,7 +27,7 @@ enum KEY_CODE {
 
 @Component({
   selector: 'app-visualiza-tickets',
-  imports: [JanelaModalClassificarComponent, ListaPastasComponent, ModalLoginComponent,ListaTicketsComponent],
+  imports: [JanelaModalClassificarComponent, ListaPastasComponent, ModalLoginComponent, ListaTicketsComponent],
   templateUrl: './visualiza-tickets.component.html',
   styleUrl: './visualiza-tickets.component.css'
 })
@@ -36,12 +42,14 @@ export class VisualizaTicketsComponent implements OnInit {
   isAuthenticated = signal(false); // Estado de autenticação
 
 
+
+
   private timerSubscription: Subscription | null = null; // Para gerenciar o timer
   private destroyRef = inject(DestroyRef); // Injeta o DestroyRef
 
   constructor(
     private route: ActivatedRoute,
-    private fotosService: GetFotosBucketService
+    private fotosService: GetSectionsService
   ) { }
 
   ngOnInit() {
@@ -50,6 +58,8 @@ export class VisualizaTicketsComponent implements OnInit {
       this.etiqueta.set(parametro);
     }
     this.getUrlImagem();
+
+ 
   }
 
   @HostListener('window:keyup', ['$event'])
@@ -143,8 +153,9 @@ export class VisualizaTicketsComponent implements OnInit {
   }
 
   private getUrlImagem() {
-    this.fotosService.getUrlImagem(this.etiqueta()).subscribe({
+    this.fotosService.getUrlImagem().subscribe({
       next: (urls) => {
+        console.log('Imagens carregadas:', urls);
         if (urls && urls.length > 0) {
           this.imagem.set(urls.reverse());
           this.maximo_indice_imagen.set(urls.length);
@@ -158,4 +169,18 @@ export class VisualizaTicketsComponent implements OnInit {
       }
     });
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

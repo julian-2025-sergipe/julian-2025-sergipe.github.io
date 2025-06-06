@@ -4,6 +4,8 @@ export const environment = {
   
   apiPastas:'https://cv-julian-2025.s3.us-east-1.amazonaws.com/ux-2025/nomes-modulos/pastas.json',
 
+  apiSection:'https://cv-julian-2025.s3.us-east-1.amazonaws.com/ux-2025/tickets/sections.json',
+
   useMock: false
 };
 

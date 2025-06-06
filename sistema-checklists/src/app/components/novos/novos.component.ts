@@ -1,6 +1,8 @@
 import { Component, HostListener, OnInit, signal, DestroyRef, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+
 import { GetFotosBucketService } from '../../services/get-fotos-bucket/get-fotos-bucket.service';
+
 import { JanelaModalClassificarComponent } from '../janela-modal-classificar/janela-modal-classificar.component';
 import { ModalLoginComponent } from '../modal-login/modal-login.component';
 import { timer, Subscription } from 'rxjs';
