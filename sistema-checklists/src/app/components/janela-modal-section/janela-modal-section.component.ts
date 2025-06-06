@@ -6,8 +6,7 @@ import { TemplateRef } from '@angular/core';
 @Component({
   selector: 'app-janela-modal-section',
   imports: [],
-  templateUrl: './janela-modal-section.component.html',
-  styleUrl: './janela-modal-section.component.css'
+  templateUrl: './janela-modal-section.component.html',  
 })
 
 export class JanelaModalSectionComponent implements OnInit {
