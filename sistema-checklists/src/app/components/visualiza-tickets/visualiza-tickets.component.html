@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -46,8 +44,12 @@
           <div class="col-sm-4 offset-md-1 py-4">
             <h4 class="text-white">Ajuda</h4>
             <ul class="list-unstyled">
-              <li><a href="https://github.com/julian-2025-sergipe/julian-2025-sergipe.github.io/blob/refatorar-2025/sistema-checklists/README.md" class="text-white">Readme</a></li>
-              <li><a href="https://github.com/julian-2025-sergipe/julian-2025-sergipe.github.io/blob/refatorar-2025/sistema-checklists/Treinamento.md" class="text-white">Treinamento</a></li>              
+              <li><a
+                  href="https://github.com/julian-2025-sergipe/julian-2025-sergipe.github.io/blob/refatorar-2025/sistema-checklists/README.md"
+                  class="text-white">Readme</a></li>
+              <li><a
+                  href="https://github.com/julian-2025-sergipe/julian-2025-sergipe.github.io/blob/refatorar-2025/sistema-checklists/Treinamento.md"
+                  class="text-white">Treinamento</a></li>
             </ul>
           </div>
         </div>
@@ -56,15 +58,15 @@
 
     <nav class="navbar navbar-dark bg-dark box-shadow">
       <div class="container d-flex justify-content-between">
-        
-<div >
-  <div><app-lista-pastas></app-lista-pastas></div>
-  
-  <div><app-tickets></app-tickets></div>
-</div>
+
+        <div>
+          <div><app-lista-pastas></app-lista-pastas></div>
+
+          <div><app-tickets></app-tickets></div>
+        </div>
 
 
-        
+
         <app-modal-login (authStateChange)="handleAuthStateChange($event)">
 
         </app-modal-login>
@@ -100,8 +102,12 @@
 
 
 
-              <app-janela-modal-section></app-janela-modal-section>
+              <app-janela-modal-section
+              [nome_imagem]="imagem()[indice_imagen()+ row + col]"
+              ></app-janela-modal-section>
+
               
+
               }
             </div>
           </div>
@@ -115,8 +121,9 @@
 
   <footer class="text-muted">
     <div class="container">
-      <p>        
-        <a href="https://github.com/julian-2025-sergipe/julian-2025-sergipe.github.io/tree/refatorar-2025/sistema-checklists">
+      <p>
+        <a
+          href="https://github.com/julian-2025-sergipe/julian-2025-sergipe.github.io/tree/refatorar-2025/sistema-checklists">
           Código fonte disponível no Github
         </a>
       </p>
