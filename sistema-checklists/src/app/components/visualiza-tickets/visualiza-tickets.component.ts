@@ -4,8 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 
 import { GetSectionsService } from '../../services/getSections/get-sections.service';
 
-//import { GetFotosBucketService } from '../../services/get-fotos-bucket/get-fotos-bucket.service';
-
+import { JanelaModalSectionComponent } from '../janela-modal-section/janela-modal-section.component';
 
 
 import { JanelaModalClassificarComponent } from '../janela-modal-classificar/janela-modal-classificar.component';
@@ -27,7 +26,7 @@ enum KEY_CODE {
 
 @Component({
   selector: 'app-visualiza-tickets',
-  imports: [JanelaModalClassificarComponent, ListaPastasComponent, ModalLoginComponent, ListaTicketsComponent],
+  imports: [JanelaModalClassificarComponent, ListaPastasComponent, ModalLoginComponent, ListaTicketsComponent,JanelaModalSectionComponent],
   templateUrl: './visualiza-tickets.component.html',
   styleUrl: './visualiza-tickets.component.css'
 })

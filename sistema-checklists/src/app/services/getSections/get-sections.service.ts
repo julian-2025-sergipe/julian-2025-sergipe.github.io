@@ -26,8 +26,9 @@ getUrlImagem(): Observable<string[]> {
 
     // Itera sobre todas as seções
     for (const section of Object.values(sections)) {
+      console.log('getUrlImagem: Processando seção', section.url);
       // Adiciona o campo 'tela' da seção, se existir e não for vazio
-      if (section.tela && section.tela !== '---------https://cv-julian-2025.s3.us-east-1.amazonaws.com/ux-2025/images-telas/16.png') {
+      if (section.tela && section.tela ) {
         telaUrls.push(section.tela);
       }
       // Verifica subseções recursivamente
