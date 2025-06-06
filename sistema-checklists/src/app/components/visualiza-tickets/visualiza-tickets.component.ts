@@ -26,7 +26,7 @@ enum KEY_CODE {
 
 @Component({
   selector: 'app-visualiza-tickets',
-  imports: [ ListaPastasComponent, ModalLoginComponent, ListaTicketsComponent,JanelaModalSectionComponent],
+  imports: [ListaPastasComponent, ModalLoginComponent, ListaTicketsComponent, JanelaModalSectionComponent],
   templateUrl: './visualiza-tickets.component.html',
   styleUrl: './visualiza-tickets.component.css'
 })
@@ -38,6 +38,7 @@ export class VisualizaTicketsComponent implements OnInit {
   indice_imagen = signal(0);
   maximo_indice_imagen = signal(0);
   imagem = signal<string[]>([]);
+  sistema = signal<string[]>([]);
   isAuthenticated = signal(false); // Estado de autenticação
 
 
@@ -57,8 +58,8 @@ export class VisualizaTicketsComponent implements OnInit {
       this.etiqueta.set(parametro);
     }
     this.getUrlImagem();
+    this.getUrlSystema();
 
- 
   }
 
   @HostListener('window:keyup', ['$event'])
@@ -154,13 +155,34 @@ export class VisualizaTicketsComponent implements OnInit {
   private getUrlImagem() {
     this.fotosService.getUrlImagem().subscribe({
       next: (urls) => {
-        console.log('Imagens carregadas:', urls);
+        //console.log('Imagens carregadas:', urls);
         if (urls && urls.length > 0) {
           this.imagem.set(urls.reverse());
           this.maximo_indice_imagen.set(urls.length);
           this.startTimer(); // Inicia o timer após carregar as imagens
         } else {
           console.warn('Nenhuma imagem carregada.');
+        }
+      },
+      error: (err) => {
+        console.error('Erro ao carregar imagens:', err);
+      }
+    });
+  }
+
+
+
+
+  private getUrlSystema() {
+    this.fotosService.getUrlSistema().subscribe({
+      next: (urls) => {
+        console.log('URL SYSTEM:', urls);
+        if (urls && urls.length > 0) {
+          this.sistema.set(urls.reverse());
+          this.maximo_indice_imagen.set(urls.length);
+          this.startTimer(); // Inicia o timer após carregar as imagens
+        } else {
+          console.warn('Nenhum url de SISTEMA');
         }
       },
       error: (err) => {
