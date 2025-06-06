@@ -26,7 +26,7 @@ enum KEY_CODE {
 
 @Component({
   selector: 'app-visualiza-tickets',
-  imports: [JanelaModalClassificarComponent, ListaPastasComponent, ModalLoginComponent, ListaTicketsComponent,JanelaModalSectionComponent],
+  imports: [ ListaPastasComponent, ModalLoginComponent, ListaTicketsComponent,JanelaModalSectionComponent],
   templateUrl: './visualiza-tickets.component.html',
   styleUrl: './visualiza-tickets.component.css'
 })
