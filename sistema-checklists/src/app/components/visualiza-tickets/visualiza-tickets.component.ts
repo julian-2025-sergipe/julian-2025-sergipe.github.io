@@ -3,13 +3,14 @@ import { ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription, timer } from 'rxjs';
 
-import { GetSectionsService } from '../../services/getSections/get-sections.service';
 
+import {ModalSectionsComponent} from '../modal-sections/modal-sections.component';
 
-import { JanelaModalSectionComponent } from '../janela-modal-section/janela-modal-section.component';
 import { ListaPastasComponent } from '../lista-pastas/lista-pastas.component';
 import { ListaTicketsComponent } from '../lista-tickets/tickets.component';
 import { ModalLoginComponent } from '../modal-login/modal-login.component';
+
+import { GetSectionsService } from '../../services/getSections/get-sections.service';
 
 import { Section } from './sections.data';
 import { Ticket } from './sections.data';
@@ -28,7 +29,7 @@ enum KEY_CODE {
   imports: [
     ListaPastasComponent,
     ListaTicketsComponent,
-    JanelaModalSectionComponent,
+    ModalSectionsComponent,
     ModalLoginComponent,
   ],
   templateUrl: './visualiza-tickets.component.html',
@@ -190,7 +191,7 @@ export class VisualizaTicketsComponent implements OnInit {
     }
 
     this.currentSection.set({ ...sectionData, key: sectionKey });
-    const modalRef = this.modalService.open(JanelaModalSectionComponent, {
+    const modalRef = this.modalService.open(ModalSectionsComponent, {
       ariaLabelledBy: 'modal-basic-title',
       size: 'lg',
     });
