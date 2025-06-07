@@ -86,7 +86,9 @@
     </nav>
   </header>
 
-  <main role="main">
+<main role="main">
+
+
     <div class="album py-5 bg-light">
       <div class="container">
         @for (row of [0, 3, 6]; track row) {
@@ -98,6 +100,8 @@
               <img id="imagem-{{ row + col + 1 }}" [src]="imagens()[indiceImagem() + row + col]" class="card-img-top"
                 alt="Image {{ row + col + 1 }}" style="height: 225px; width: 100%; display: block;" />
 
+              
+                
               @if (isAuthenticated()) {
 
 

@@ -1,4 +1,5 @@
 import { Component, HostListener, OnInit, signal, computed, inject, DestroyRef } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription, timer } from 'rxjs';
@@ -13,7 +14,6 @@ import { ModalLoginComponent } from '../modal-login/modal-login.component';
 import { GetSectionsService } from '../../services/getSections/get-sections.service';
 
 import { Section } from './sections.data';
-import { Ticket } from './sections.data';
 
 // Definindo as constantes para os códigos de tecla
 enum KEY_CODE {
@@ -27,6 +27,7 @@ enum KEY_CODE {
   selector: 'app-visualiza-tickets',
   standalone: true,
   imports: [
+    CommonModule,
     ListaPastasComponent,
     ListaTicketsComponent,
     ModalSectionsComponent,
