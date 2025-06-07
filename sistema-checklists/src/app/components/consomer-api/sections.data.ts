@@ -33,7 +33,9 @@ export const sections: Readonly<Record<string, Section>> = {
     "tela": "https://cv-julian-2025.s3.us-east-1.amazonaws.com/ux-2025/images-telas/16.png"
   },
   "aulas": {
-    "Comentarios": [],
+    "Comentarios": [
+      "esperando informações do Guilherme"
+    ],
     "Tickets": [],
     "url": "https://stagging.dotelematics.com/academy/lessons",
     "tela": "https://cv-julian-2025.s3.us-east-1.amazonaws.com/ux-2025/images-telas/2.png"
@@ -305,7 +307,7 @@ export const sections: Readonly<Record<string, Section>> = {
   },
   "Identificadores": {
     "Comentarios": [
-      "é possível cadastrar ibuttons com codigos ja existentes. Lembrar que no ticket DEV-174 (https://linear.app/dotelematics/issue/DEV-174/impedir-que-seja-possivel-vincular-ibuttons-e-motoristas-de-empresas) Fernanda tinha feito: Feito a validação na api e também modificado o front para que as opções no select de motorista sejam somente motoristas da empresa selecionada. Lembrar do falso DELETE: https://github.com/marine-br/api/pull/969"
+      "é possível cadastrar ibuttons com codigos ja existentes. Lembrar que no ticket DEV-174 (https://linear.app/dotelematics/issue/DEV-174/impedir-que-seja-possivel-vincular-ibuttons-e-motoristas-de-empresas) Fernanda tinha feito: Feito a validação na api e também modificado o front para que as opções no select de motorista sejam somente motoristas da empresa selecionada. Lembrar do falso DELETE: https://github.com/marine-br/api/pull/969. CUIDADO : limitação que parece exagerada (https://github.com/marine-br/front-react/pull/1675) --> Questionamento: e que tal se um motorista trabalha-se (de manha numa empresa) e de tarde em outra ????, --> --> Questionamento: E que tal se fosse um motorista Freelancer"
     ],
     "Funcionalidades": [],
     "Subsecoes": {},
@@ -316,7 +318,8 @@ export const sections: Readonly<Record<string, Section>> = {
           "desvinculo_automatico": "ao mudar empresa do ibutton nao desvincula o motorista ( Lembrar do falso DELETE: https://github.com/marine-br/api/pull/969)",
           "vincular_motoristas_ibutton_livre": "é possivel vincular motoristas com ibuttons que náo estao vinculados",
         "verificar_SELECT":"quando se ingresa na tela pura (https://stagging.dotelematics.com/fleet/ibuttons), ele apresenta muitos motoristas sem PREVIAMENTE filtrar por empresa"        ,
-        "aprimorar_editor_ibutttons":"ele permite edição massiva ???"
+        "aprimorar_editor_ibutttons":"ele permite edição massiva ???",
+        "filtro_select_motorista_deve_apagar_automatico":"Ele está filtrando (https://github.com/marine-br/front-react/pull/1675), mas deveria apagar o motorista de filtragem anterior para evitar problema"
       },
 
         "url_ticket": "https://linear.app/dotelematics/issue/DEV-152/revisao-da-plataforma"
@@ -457,7 +460,9 @@ export const sections: Readonly<Record<string, Section>> = {
     "url": "https://stagging.dotelematics.com/fleet/drivers"
   },
   "Panels": {
-    "Comentarios": [],
+    "Comentarios": [
+      "Deve ser aprimorado dado que as ABAS não estão esteticas"
+    ],
     "Funcionalidades": [],
     "Subsecoes": {},
     "Tickets": [
@@ -467,7 +472,8 @@ export const sections: Readonly<Record<string, Section>> = {
         "url_ticket": "https://linear.app/dotelematics/issue/DEV-152/revisao-da-plataforma"
       }
     ],
-    "url": "https://stagging.dotelematics.com/panels", "tela": "---------https://cv-julian-2025.s3.us-east-1.amazonaws.com/ux-2025/images-telas/16.png"
+    "url": "https://stagging.dotelematics.com/panels", 
+    "tela": "---------https://cv-julian-2025.s3.us-east-1.amazonaws.com/ux-2025/images-telas/16.png"
   },
   "Perfis": {
     "Comentarios": [],
