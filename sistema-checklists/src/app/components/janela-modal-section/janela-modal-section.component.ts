@@ -2,6 +2,7 @@
 
 import { GetSectionsService } from '../../services/getSections/get-sections.service';
 
+import { Section, Ticket } from '../visualiza-tickets/sections.data'; // Corrigir importação
 
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -15,6 +16,10 @@ import { take } from 'rxjs/operators';
   templateUrl: './janela-modal-section.component.html',
 })
 export class JanelaModalSectionComponent implements OnInit {
+
+  @Input() sectionData: (Section & { key: string }) | null = null;
+
+
   @Input() nome_imagem: string = ''; // Mantido como fallback
   @Input() etiqueta_imagem: string = '';
   imagemFixa: string = '';
@@ -24,7 +29,7 @@ export class JanelaModalSectionComponent implements OnInit {
   constructor(
     private readonly modalService: NgbModal,
     private readonly getSectionsService: GetSectionsService // Injeta o serviço
-  ) {}
+  ) { }
 
   ngOnInit() {
     console.log('Inicializando componente. Etiqueta da imagem:', this.etiqueta_imagem);
@@ -58,4 +63,28 @@ export class JanelaModalSectionComponent implements OnInit {
       }
     );
   }
+
+
+
+
+
+
+
+  objectKeys(obj: Record<string, any> | null | undefined): string[] {
+    return Object.keys(obj || {});
+  }
+
+  isTicket(item: string | Ticket): item is Ticket {
+    return typeof item === 'object' && item !== null;
+  }
+
+
+
+
+
+
+
+
+
+
 }

@@ -92,10 +92,10 @@
         @for (row of [0, 3, 6]; track row) {
         <div class="row">
           @for (col of [0, 1, 2]; track col) {
-          @if (imagem()[indice_imagen() + row + col]) {
+          @if (imagens()[indiceImagem() + row + col]) {
           <div class="col-md-4">
             <div class="card mb-4 box-shadow">
-              <img id="imagem-{{ row + col + 1 }}" [src]="imagem()[indice_imagen() + row + col]" class="card-img-top"
+              <img id="imagem-{{ row + col + 1 }}" [src]="imagens()[indiceImagem() + row + col]" class="card-img-top"
                 alt="Image {{ row + col + 1 }}" style="height: 225px; width: 100%; display: block;" />
 
               @if (isAuthenticated()) {
@@ -103,7 +103,7 @@
 
 
               <app-janela-modal-section
-              [nome_imagem]="imagem()[indice_imagen()+ row + col]"
+              [nome_imagem]="imagens()[indiceImagem()+ row + col]"
               ></app-janela-modal-section>
 
               

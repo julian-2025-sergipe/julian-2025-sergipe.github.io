@@ -5,86 +5,102 @@ import { environment } from '../../../environments/environment';
 import { Section } from './sections.data';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class GetSectionsService {
   private http = inject(HttpClient);
   private url = environment.apiSection;
 
-  getUrlImagem(): Observable<string[]> {
-    //console.log('getUrlImagem: Buscando seções em', this.url);
+  /**
+   * Obtém todas as seções do endpoint.
+   * @returns Observable com o JSON completo das seções.
+   */
+  getSections(): Observable<Record<string, Section>> {
+    console.log('getSections: Buscando seções em', this.url);
+    return this.http.get<Record<string, Section>>(this.url).pipe(
+      retry(2),
+      catchError((error) => this.handleError(error, 'seções')),
+    );
+  }
 
+  /**
+   * Obtém as URLs das imagens (campo 'tela') de todas as seções e subseções.
+   * @returns Observable com um array de URLs de imagens.
+   */
+  getUrlImagem(): Observable<string[]> {
+    console.log('getUrlImagem: Buscando seções em', this.url);
     return this.http.get<Record<string, Section>>(this.url).pipe(
       retry(2),
       map((sections: Record<string, Section>) => this.extractTelaUrls(sections)),
-      catchError((error) => this.handleError(error))
+      catchError((error) => this.handleError(error, 'URLs de imagens')),
     );
   }
 
+  /**
+   * Obtém as URLs dos sistemas (campo 'url') de todas as seções e subseções.
+   * @returns Observable com um array de URLs de sistemas.
+   */
   getUrlSistema(): Observable<string[]> {
     console.log('getUrlSistema: Buscando seções em', this.url);
-
     return this.http.get<Record<string, Section>>(this.url).pipe(
       retry(2),
-      map((sections: Record<string, Section>) => this.extractUrlsSystem(sections)),
-      catchError((error) => this.handleError(error))
+      map((sections: Record<string, Section>) => this.extractSystemUrls(sections)),
+      catchError((error) => this.handleError(error, 'URLs de sistemas')),
     );
   }
 
-
-
+  /**
+   * Extrai as URLs do campo 'tela' de seções e subseções recursivamente.
+   * @param sections Objeto contendo seções ou subseções.
+   * @returns Array de URLs de imagens.
+   */
   private extractTelaUrls(sections: Record<string, Section>): string[] {
     const telaUrls: string[] = [];
-
-    // Itera sobre todas as seções
     for (const section of Object.values(sections)) {
-      //console.log('getUrlImagem: Processando seção', section.url);
-      // Adiciona o campo 'tela' da seção, se existir e não for vazio
-      if (section.tela && section.tela) {
-        telaUrls.push(section.tela);
+      if (section.tela && section.tela.trim() !== '') {
+        // Corrige URLs inválidas, como em "Barcos"
+        const cleanedTela = section.tela.replace(/^[-]+/, '');
+        telaUrls.push(cleanedTela);
       }
-      // Verifica subseções recursivamente
-      if (section.Subsecoes) {
-        const subTelaUrls = this.extractTelaUrls(section.Subsecoes);
-        telaUrls.push(...subTelaUrls);
+      if (section.Subsecoes && Object.keys(section.Subsecoes).length > 0) {
+        telaUrls.push(...this.extractTelaUrls(section.Subsecoes));
       }
     }
     return telaUrls;
   }
 
-
-
-
-
-  private extractUrlsSystem(sections: Record<string, Section>): string[] {
-    const telaUrlsSystem: string[] = [];
-
-    // Itera sobre todas as seções
+  /**
+   * Extrai as URLs do campo 'url' de seções e subseções recursivamente.
+   * @param sections Objeto contendo seções ou subseções.
+   * @returns Array de URLs de sistemas.
+   */
+  private extractSystemUrls(sections: Record<string, Section>): string[] {
+    const systemUrls: string[] = [];
     for (const section of Object.values(sections)) {
-      console.log('extractUrlsSystem: Processando seção', section.url);
-      // Adiciona o campo 'tela' da seção, se existir e não for vazio
-      if (section.tela && section.url) {
-        telaUrlsSystem.push(section.url);
+      if (section.url && section.url.trim() !== '') {
+        systemUrls.push(section.url);
       }
-      // Verifica subseções recursivamente
-      if (section.Subsecoes) {
-        const subTelaUrls = this.extractTelaUrls(section.Subsecoes);
-        telaUrlsSystem.push(...subTelaUrls);
+      if (section.Subsecoes && Object.keys(section.Subsecoes).length > 0) {
+        systemUrls.push(...this.extractSystemUrls(section.Subsecoes));
       }
     }
-    return telaUrlsSystem;
-
+    return systemUrls;
   }
 
-  private handleError(error: any): Observable<never> {
-    console.error(`Erro ao buscar seções da URL ${this.url}:`, error);
-    return throwError(() => new Error('Falha ao buscar URLs das telas. Tente novamente.'));
+  /**
+   * Trata erros de requisições HTTP.
+   * @param error Erro retornado pela requisição.
+   * @param context Contexto da requisição (para mensagem de erro).
+   * @returns Observable com erro formatado.
+   */
+  private handleError(error: HttpErrorResponse, context: string): Observable<never> {
+    let errorMessage = `Erro ao buscar ${context} da URL ${this.url}: `;
+    if (error.status === 0) {
+      errorMessage += 'Falha na conexão com o servidor. Verifique sua rede.';
+    } else {
+      errorMessage += `Código ${error.status} - ${error.message}`;
+    }
+    console.error(errorMessage, error);
+    return throwError(() => new Error(`Falha ao buscar ${context}. Tente novamente.`));
   }
-
-
-
-
 }
-
-
-

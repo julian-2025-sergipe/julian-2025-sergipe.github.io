@@ -1,144 +1,216 @@
-
-import { Component, HostListener, OnInit, signal, DestroyRef, inject } from '@angular/core';
+import { Component, HostListener, OnInit, signal, computed, inject, DestroyRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Subscription, timer } from 'rxjs';
 
 import { GetSectionsService } from '../../services/getSections/get-sections.service';
 
+
 import { JanelaModalSectionComponent } from '../janela-modal-section/janela-modal-section.component';
-
-
-import { JanelaModalClassificarComponent } from '../janela-modal-classificar/janela-modal-classificar.component';
-import { ModalLoginComponent } from '../modal-login/modal-login.component';
-import { timer, Subscription } from 'rxjs';
 import { ListaPastasComponent } from '../lista-pastas/lista-pastas.component';
-
 import { ListaTicketsComponent } from '../lista-tickets/tickets.component';
+import { ModalLoginComponent } from '../modal-login/modal-login.component';
 
-
+import { Section } from './sections.data';
+import { Ticket } from './sections.data';
 
 // Definindo as constantes para os códigos de tecla
 enum KEY_CODE {
   RIGHT_ARROW = 'ArrowRight',
   LEFT_ARROW = 'ArrowLeft',
   UP_ARROW = 'ArrowUp',
-  DOWN_ARROW = 'ArrowDown'
+  DOWN_ARROW = 'ArrowDown',
 }
 
 @Component({
   selector: 'app-visualiza-tickets',
-  imports: [ListaPastasComponent, ModalLoginComponent, ListaTicketsComponent, JanelaModalSectionComponent],
+  standalone: true,
+  imports: [
+    ListaPastasComponent,
+    ListaTicketsComponent,
+    JanelaModalSectionComponent,
+    ModalLoginComponent,
+  ],
   templateUrl: './visualiza-tickets.component.html',
-  styleUrl: './visualiza-tickets.component.css'
+  styleUrls: ['./visualiza-tickets.component.css'],
 })
-
-
-
 export class VisualizaTicketsComponent implements OnInit {
-  etiqueta = signal('geral');
-  indice_imagen = signal(0);
-  maximo_indice_imagen = signal(0);
-  imagem = signal<string[]>([]);
-  sistema = signal<string[]>([]);
-  isAuthenticated = signal(false); // Estado de autenticação
+  // Signals para estado
+  etiqueta = signal<string>('geral');
+  indiceImagem = signal<number>(0);
+  maximoIndiceImagem = signal<number>(0);
+  imagens = signal<string[]>([]);
+  sistemas = signal<string[]>([]);
+  isAuthenticated = signal<boolean>(false);
+  sections = signal<Record<string, Section>>({});
+  // Signal para a seção atual, incluindo a chave
+  currentSection = signal<(Section & { key: string }) | null>(null); // Ajuste do tipo
 
+  // Computed signal para a imagem atual
+  imagemAtual = computed(() => this.imagens()[this.indiceImagem()] || '');
 
-
-
-  private timerSubscription: Subscription | null = null; // Para gerenciar o timer
-  private destroyRef = inject(DestroyRef); // Injeta o DestroyRef
+  private timerSubscription: Subscription | null = null;
+  private destroyRef = inject(DestroyRef);
 
   constructor(
     private route: ActivatedRoute,
-    private fotosService: GetSectionsService
-  ) { }
+    private fotosService: GetSectionsService,
+    private modalService: NgbModal,
+  ) {}
 
   ngOnInit() {
+    // Carrega o parâmetro da rota
     const parametro = this.route.snapshot.paramMap.get('parametro');
     if (parametro) {
       this.etiqueta.set(parametro);
     }
-    this.getUrlImagem();
-    this.getUrlSystema();
 
+    // Carrega dados do serviço
+    this.loadSections();
+    this.loadUrls();
   }
 
+  // Manipulação de eventos de teclado
   @HostListener('window:keyup', ['$event'])
   keyEvent(event: KeyboardEvent) {
-    // Pausa o timer ao interagir com as teclas
     this.pauseTimer();
 
-    if (event.key === KEY_CODE.RIGHT_ARROW) {
-      this.increment();
-    } else if (event.key === KEY_CODE.LEFT_ARROW) {
-      this.decrement();
-    } else if (event.key === KEY_CODE.UP_ARROW) {
-      this.increment10();
-    } else if (event.key === KEY_CODE.DOWN_ARROW) {
-      this.decrement10();
+    switch (event.key) {
+      case KEY_CODE.RIGHT_ARROW:
+        this.increment();
+        break;
+      case KEY_CODE.LEFT_ARROW:
+        this.decrement();
+        break;
+      case KEY_CODE.UP_ARROW:
+        this.increment10();
+        break;
+      case KEY_CODE.DOWN_ARROW:
+        this.decrement10();
+        break;
     }
 
-    //console.log(this.indice_imagen());
-
-    // Reinicia o timer após a interação
     this.startTimer();
   }
 
-  private avancoCertificados() {
-    if (this.indice_imagen() >= this.maximo_indice_imagen()) {
-      this.indice_imagen.set(0);
-    } else {
-      this.indice_imagen.update(i => i + 1);
-    }
+  // Carrega seções do JSON
+  private loadSections() {
+    this.fotosService.getSections().subscribe({
+      next: (sections: Record<string, Section>) => {
+        this.sections.set(sections);
+        this.maximoIndiceImagem.set(Object.keys(sections).length);
+      },
+      error: (err) => {
+        console.error('Erro ao carregar seções:', err);
+      },
+    });
   }
 
+  // Carrega URLs de imagens e sistemas
+  private loadUrls() {
+    this.fotosService.getUrlImagem().subscribe({
+      next: (urls) => {
+        if (urls?.length) {
+          this.imagens.set(urls.reverse());
+          this.startTimer();
+        } else {
+          console.warn('Nenhuma imagem carregada.');
+        }
+      },
+      error: (err) => {
+        console.error('Erro ao carregar imagens:', err);
+      },
+    });
+
+    this.fotosService.getUrlSistema().subscribe({
+      next: (urls) => {
+        if (urls?.length) {
+          this.sistemas.set(urls.reverse());
+        } else {
+          console.warn('Nenhum URL de sistema carregado.');
+        }
+      },
+      error: (err) => {
+        console.error('Erro ao carregar sistemas:', err);
+      },
+    });
+  }
+
+  // Navegação entre imagens
   private increment() {
-    if (this.indice_imagen() + 1 < this.maximo_indice_imagen()) {
-      this.indice_imagen.update(i => i + 1);
-    }
+    this.indiceImagem.update((i) =>
+      i + 1 < this.maximoIndiceImagem() ? i + 1 : i,
+    );
   }
 
   private decrement() {
-    if (this.indice_imagen() > 0) {
-      this.indice_imagen.update(i => i - 1);
-    }
+    this.indiceImagem.update((i) => (i > 0 ? i - 1 : i));
   }
 
   private increment10() {
-    if (this.indice_imagen() + 10 < this.maximo_indice_imagen()) {
-      this.indice_imagen.update(i => i + 10);
-    }
+    this.indiceImagem.update((i) =>
+      i + 10 < this.maximoIndiceImagem() ? i + 10 : i,
+    );
   }
 
   private decrement10() {
-    if (this.indice_imagen() > 10) {
-      this.indice_imagen.update(i => i - 10);
-    }
+    this.indiceImagem.update((i) => (i >= 10 ? i - 10 : i));
   }
 
-  public startTimer() {
-    // Evita múltiplos timers
-    this.pauseTimer();
+  private avancoCertificados() {
+    this.indiceImagem.update((i) =>
+      i >= this.maximoIndiceImagem() - 1 ? 0 : i + 1,
+    );
+  }
 
-    if (this.maximo_indice_imagen() > 0) {
+  // Gerenciamento do timer
+  startTimer() {
+    this.pauseTimer();
+    if (this.maximoIndiceImagem() > 0) {
       this.timerSubscription = timer(3000, 3000).subscribe(() => {
         this.avancoCertificados();
       });
-
-      // Cancela a subscrição quando o componente for destruído
-      this.destroyRef.onDestroy(() => {
-        this.pauseTimer();
-      });
+      this.destroyRef.onDestroy(() => this.pauseTimer());
     }
   }
 
-  public pauseTimer() {
+  pauseTimer() {
     if (this.timerSubscription) {
       this.timerSubscription.unsubscribe();
       this.timerSubscription = null;
     }
   }
 
-  // No NovosComponent
+  // Abertura do modal
+  openModal(sectionKey: string) {
+    const sectionData = this.sections()[sectionKey];
+    if (!sectionData) {
+      console.warn(`Seção ${sectionKey} não encontrada.`);
+      return;
+    }
+
+    this.currentSection.set({ ...sectionData, key: sectionKey });
+    const modalRef = this.modalService.open(JanelaModalSectionComponent, {
+      ariaLabelledBy: 'modal-basic-title',
+      size: 'lg',
+    });
+
+    // Passa os dados para o componente do modal
+    modalRef.componentInstance.sectionData = this.currentSection();
+
+    modalRef.result.then(
+      (result) => {
+        this.startTimer();
+        console.log('Modal fechado com resultado:', result);
+      },
+      () => {
+        this.startTimer();
+        console.log('Modal descartado.');
+      },
+    );
+  }
+
+  // Manipula eventos do modal
   modalOpened() {
     this.pauseTimer();
   }
@@ -147,61 +219,13 @@ export class VisualizaTicketsComponent implements OnInit {
     this.startTimer();
   }
 
-  // Manipula mudanças no estado de autenticação
+  // Manipula autenticação
   handleAuthStateChange(isAuthenticated: boolean) {
     this.isAuthenticated.set(isAuthenticated);
   }
 
-  private getUrlImagem() {
-    this.fotosService.getUrlImagem().subscribe({
-      next: (urls) => {
-        //console.log('Imagens carregadas:', urls);
-        if (urls && urls.length > 0) {
-          this.imagem.set(urls.reverse());
-          this.maximo_indice_imagen.set(urls.length);
-          this.startTimer(); // Inicia o timer após carregar as imagens
-        } else {
-          console.warn('Nenhuma imagem carregada.');
-        }
-      },
-      error: (err) => {
-        console.error('Erro ao carregar imagens:', err);
-      }
-    });
+  // Função auxiliar para ngFor com objetos
+  objectKeys(obj: Record<string, any>): string[] {
+    return Object.keys(obj);
   }
-
-
-
-
-  private getUrlSystema() {
-    this.fotosService.getUrlSistema().subscribe({
-      next: (urls) => {
-        console.log('URL SYSTEM:', urls);
-        if (urls && urls.length > 0) {
-          this.sistema.set(urls.reverse());
-          this.maximo_indice_imagen.set(urls.length);
-          this.startTimer(); // Inicia o timer após carregar as imagens
-        } else {
-          console.warn('Nenhum url de SISTEMA');
-        }
-      },
-      error: (err) => {
-        console.error('Erro ao carregar imagens:', err);
-      }
-    });
-  }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
