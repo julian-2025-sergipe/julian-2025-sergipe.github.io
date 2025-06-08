@@ -5,7 +5,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription, timer } from 'rxjs';
 
 
-import {ModalSectionsComponent} from '../modal-sections/modal-sections.component';
+import { ModalSectionsComponent } from '../modal-sections/modal-sections.component';
 
 import { ListaPastasComponent } from '../lista-pastas/lista-pastas.component';
 import { ListaTicketsComponent } from '../lista-tickets/tickets.component';
@@ -45,6 +45,9 @@ export class VisualizaTicketsComponent implements OnInit {
   sistemas = signal<string[]>([]);
   isAuthenticated = signal<boolean>(false);
   sections = signal<Record<string, Section>>({});
+  indiceSection = signal<number>(0); // Substitui indiceImagem
+  maximoIndiceSection = signal<number>(0); 
+
   // Signal para a seção atual, incluindo a chave
   currentSection = signal<(Section & { key: string }) | null>(null); // Ajuste do tipo
 
@@ -58,7 +61,7 @@ export class VisualizaTicketsComponent implements OnInit {
     private route: ActivatedRoute,
     private fotosService: GetSectionsService,
     private modalService: NgbModal,
-  ) {}
+  ) { }
 
   ngOnInit() {
     // Carrega o parâmetro da rota
@@ -100,7 +103,9 @@ export class VisualizaTicketsComponent implements OnInit {
     this.fotosService.getSections().subscribe({
       next: (sections: Record<string, Section>) => {
         this.sections.set(sections);
-        this.maximoIndiceImagem.set(Object.keys(sections).length);
+        this.maximoIndiceSection.set(Object.keys(sections).length);
+        this.maximoIndiceSection.set(Object.keys(sections).length);
+
       },
       error: (err) => {
         console.error('Erro ao carregar seções:', err);
@@ -141,7 +146,7 @@ export class VisualizaTicketsComponent implements OnInit {
   // Navegação entre imagens
   private increment() {
     this.indiceImagem.update((i) =>
-      i + 1 < this.maximoIndiceImagem() ? i + 1 : i,
+      i + 1 < this.maximoIndiceSection() ? i + 1 : i,
     );
   }
 
@@ -151,7 +156,7 @@ export class VisualizaTicketsComponent implements OnInit {
 
   private increment10() {
     this.indiceImagem.update((i) =>
-      i + 10 < this.maximoIndiceImagem() ? i + 10 : i,
+      i + 10 < this.maximoIndiceSection() ? i + 10 : i,
     );
   }
 
@@ -161,14 +166,14 @@ export class VisualizaTicketsComponent implements OnInit {
 
   private avancoCertificados() {
     this.indiceImagem.update((i) =>
-      i >= this.maximoIndiceImagem() - 1 ? 0 : i + 1,
+      i >= this.maximoIndiceSection() - 1 ? 0 : i + 1,
     );
   }
 
   // Gerenciamento do timer
   startTimer() {
     this.pauseTimer();
-    if (this.maximoIndiceImagem() > 0) {
+    if (this.maximoIndiceSection() > 0) {
       this.timerSubscription = timer(3000, 3000).subscribe(() => {
         this.avancoCertificados();
       });
@@ -230,4 +235,7 @@ export class VisualizaTicketsComponent implements OnInit {
   objectKeys(obj: Record<string, any>): string[] {
     return Object.keys(obj);
   }
+
+
+
 }

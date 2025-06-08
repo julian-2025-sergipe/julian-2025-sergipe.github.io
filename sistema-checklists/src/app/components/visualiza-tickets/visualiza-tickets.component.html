@@ -85,19 +85,34 @@
       </div>
     </nav>
   </header>
-
 <main role="main">
+  <div class="album py-5 bg-light">
+    <div class="container">
+      @for (row of [0, 3, 6]; track row) {
+      <div class="row">
+        @for (col of [0, 1, 2]; track col) {
+        @if (objectKeys(sections())[indiceSection() + row + col]) {
+        @let sectionKey = objectKeys(sections())[indiceSection() + row + col];
+        <div class="col-md-4">
+          <div class="card mb-4 box-shadow">
+            <div class="card-body">
+              <p>{{ sections()[sectionKey].Comentarios }}</p>
+              <button (click)="openModal(sectionKey)" class="btn btn-primary">Ver Detalhes</button>
+            </div>
 
-
-@if (sections() | keyvalue) {
-  @for (section of objectKeys(sections()); track section) {
-    <div>
-      <p>{{ sections()[section].Comentarios }}</p>
-      <button (click)="openModal(section)">Ver Detalhes</button>
+            <!-- Componente modal, se autenticado -->
+            @if (isAuthenticated()) {
+           
+            }
+          </div>
+        </div>
+        }
+        }
+      </div>
+      }
     </div>
-  }
-}
-  </main>
+  </div>
+</main>
 
   <footer class="text-muted">
     <div class="container">
