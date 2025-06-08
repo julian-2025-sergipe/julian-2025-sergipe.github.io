@@ -46,7 +46,7 @@ export class VisualizaTicketsComponent implements OnInit {
   isAuthenticated = signal<boolean>(false);
   sections = signal<Record<string, Section>>({});
   indiceSection = signal<number>(0); // Substitui indiceImagem
-  maximoIndiceSection = signal<number>(0); 
+  maximoIndiceSection = signal<number>(0);
 
   // Signal para a seção atual, incluindo a chave
   currentSection = signal<(Section & { key: string }) | null>(null); // Ajuste do tipo
@@ -103,7 +103,6 @@ export class VisualizaTicketsComponent implements OnInit {
     this.fotosService.getSections().subscribe({
       next: (sections: Record<string, Section>) => {
         this.sections.set(sections);
-        this.maximoIndiceSection.set(Object.keys(sections).length);
         this.maximoIndiceSection.set(Object.keys(sections).length);
 
       },
