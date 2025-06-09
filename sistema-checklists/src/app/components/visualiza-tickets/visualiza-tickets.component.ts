@@ -296,6 +296,10 @@ objectKeys(obj: Record<string, any>): string[] {
   return Object.keys(obj);
 }
 
+getPrimeiroComentario(key: string): string | null {
+  const comentarios = this.sections()[key]?.Comentarios;
+  return (comentarios && comentarios.length > 0) ? comentarios[0] : null;
+}
 
 
 }

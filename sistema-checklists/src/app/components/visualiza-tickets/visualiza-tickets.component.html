@@ -99,12 +99,16 @@
             @if (sectionKey && comentariosVisiveis[sectionKey]) {
             <div class="col-md-4">
               <div class="card mb-4 box-shadow">
-                <div class="card-body">
-                  <p>{{ comentariosVisiveis[sectionKey].length }}</p>
-                  @if (sections()[sectionKey]?.Comentarios ) {
-                  <p>{{ sections()[sectionKey].Comentarios | json }}</p>
-                  }
-                </div>
+
+
+                @if(getPrimeiroComentario(sectionKey))
+                {
+                <p>
+                  {{ getPrimeiroComentario(sectionKey) }}
+                </p>
+                }
+
+
               </div>
             </div>
             }
