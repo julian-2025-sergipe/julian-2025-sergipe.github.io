@@ -90,30 +90,26 @@
       <div class="container">
         @for (row of [0, 3, 6]; track row) {
         <div class="row">
+          @for (col of [0, 1, 2]; track col) {
+          @let sectionIndex = indiceSection() + row + col;
+          @let sectionKey = objectKeys(comentariosVisiveis)[sectionIndex];
+          @if (sectionKey && comentariosVisiveis[sectionKey]) {
+          <div class="col-md-4">
+            <div class="card mb-4 box-shadow">
+              <div class="card-body">
 
+                <div class="card-body">
+                  <p>{{ sections()[sectionKey].url }}</p>
+                </div>
 
-          @for (row of [0, 3, 6]; track row) {
-          <div class="row">
-            @for (col of [0, 1, 2]; track col) {
-            @let sectionKey = objectKeys(comentariosVisiveis)[indiceSection() + row + col];
-            @if (sectionKey && comentariosVisiveis[sectionKey]) {
-            <div class="col-md-4">
-              <div class="card mb-4 box-shadow">
-
-
-                @if(getPrimeiroComentario(sectionKey))
-                {
-                <p>
-                  {{ getPrimeiroComentario(sectionKey) }}
-                </p>
+                @if(getPrimeiroComentario(sectionKey)) {
+                <p>{{ getPrimeiroComentario(sectionKey) }}</p>
                 }
-
-
+                <button (click)="openModal(sectionKey)" class="btn btn-primary">Ver Detalhes</button>
               </div>
             </div>
-            }
-            }
           </div>
+          }
           }
         </div>
         }
