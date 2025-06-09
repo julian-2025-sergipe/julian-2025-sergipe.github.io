@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit, signal, computed, inject, DestroyRef } from '@angular/core';
+import { Component, HostListener, OnInit, signal, computed, inject, DestroyRef, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -48,203 +48,253 @@ export class VisualizaTicketsComponent implements OnInit {
   indiceSection = signal<number>(0); // Substitui indiceImagem
   maximoIndiceSection = signal<number>(0);
 
-  // Signal para a seção atual, incluindo a chave
-  currentSection = signal<(Section & { key: string }) | null>(null); // Ajuste do tipo
+comentariosVisiveis: { [key: string]: string[] } = {};
 
-  // Computed signal para a imagem atual
-  imagemAtual = computed(() => this.imagens()[this.indiceSection()] || '');
+
+// Signal para a seção atual, incluindo a chave
+currentSection = signal<(Section & { key: string }) | null>(null); // Ajuste do tipo
+
+// Computed signal para a imagem atual
+imagemAtual = computed(() => this.imagens()[this.indiceSection()] || '');
 
   private timerSubscription: Subscription | null = null;
   private destroyRef = inject(DestroyRef);
 
-  constructor(
-    private route: ActivatedRoute,
-    private fotosService: GetSectionsService,
-    private modalService: NgbModal,
-  ) { }
+constructor(
+  private route: ActivatedRoute,
+  private fotosService: GetSectionsService,
+  private modalService: NgbModal,
+) { }
 
-  ngOnInit() {
-    // Carrega o parâmetro da rota
-    const parametro = this.route.snapshot.paramMap.get('parametro');
-    if (parametro) {
-      this.etiqueta.set(parametro);
-    }
-
-    // Carrega dados do serviço
-    this.loadSections();
-    this.loadUrls();
+ngOnInit() {
+  // Carrega o parâmetro da rota
+  const parametro = this.route.snapshot.paramMap.get('parametro');
+  if (parametro) {
+    this.etiqueta.set(parametro);
   }
 
-  // Manipulação de eventos de teclado
-  @HostListener('window:keyup', ['$event'])
-  keyEvent(event: KeyboardEvent) {
+  // Carrega dados do serviço
+  this.loadSections();
+  this.loadUrls();
 
-console.log('Tecla pressionada:', event.key);
-console.log('Indice atual:', this.indiceSection());
 
-    this.pauseTimer();
-
-    switch (event.key) {
-      case KEY_CODE.RIGHT_ARROW:
-        this.increment();
-        break;
-      case KEY_CODE.LEFT_ARROW:
-        this.decrement();
-        break;
-      case KEY_CODE.UP_ARROW:
-        this.increment10();
-        break;
-      case KEY_CODE.DOWN_ARROW:
-        this.decrement10();
-        break;
+  effect(() => {
+  const keys = Object.keys(this.sections());
+  const index = this.indiceSection();
+  if (index < keys.length) {
+    const key = keys[index];
+    const section = this.sections()[key];
+    if (section) {
+      this.currentSection.set({ ...section, key });
     }
-
-    this.startTimer();
   }
+
+
+
+
+
+});
+
+
+
+  
+}
+
+// Manipulação de eventos de teclado
+@HostListener('window:keyup', ['$event'])
+keyEvent(event: KeyboardEvent) {
+
+  console.log('Tecla pressionada:', event.key);
+  console.log('Indice atual:', this.indiceSection());
+
+  this.pauseTimer();
+
+  switch (event.key) {
+    case KEY_CODE.RIGHT_ARROW:
+      this.increment();
+      break;
+    case KEY_CODE.LEFT_ARROW:
+      this.decrement();
+      break;
+    case KEY_CODE.UP_ARROW:
+      this.increment10();
+      break;
+    case KEY_CODE.DOWN_ARROW:
+      this.decrement10();
+      break;
+  }
+
+  this.startTimer();
+}
 
   // Carrega seções do JSON
   private loadSections() {
-    this.fotosService.getSections().subscribe({
-      next: (sections: Record<string, Section>) => {
-        this.sections.set(sections);
-        this.maximoIndiceSection.set(Object.keys(sections).length);
+  this.fotosService.getSections().subscribe({
+    next: (sections: Record<string, Section>) => {
+      this.sections.set(sections);
+      this.maximoIndiceSection.set(Object.keys(sections).length);
 
-      },
-      error: (err) => {
-        console.error('Erro ao carregar seções:', err);
-      },
-    });
-  }
+      // ← Adicione este trecho para preencher comentariosVisiveis
+      for (const key of Object.keys(sections)) {
+        const comentarios = sections[key]?.Comentarios || [];
+        const filtrados = comentarios.filter(
+          c => typeof c === 'string' && c.trim().length > 0
+        );
+        if (filtrados.length > 0) {
+          this.comentariosVisiveis[key] = filtrados;
+        }
+      }
+
+    },
+    error: (err) => {
+      console.error('Erro ao carregar seções:', err);
+    },
+  });
+}
+
+  
+  private loadSections1() {
+  this.fotosService.getSections().subscribe({
+    next: (sections: Record<string, Section>) => {
+      this.sections.set(sections);
+      this.maximoIndiceSection.set(Object.keys(sections).length);
+
+    },
+    error: (err) => {
+      console.error('Erro ao carregar seções:', err);
+    },
+  });
+}
 
   // Carrega URLs de imagens e sistemas
   private loadUrls() {
-    this.fotosService.getUrlImagem().subscribe({
-      next: (urls) => {
-        if (urls?.length) {
-          this.imagens.set(urls.reverse());
-          this.startTimer();
-        } else {
-          console.warn('Nenhuma imagem carregada.');
-        }
-      },
-      error: (err) => {
-        console.error('Erro ao carregar imagens:', err);
-      },
-    });
+  this.fotosService.getUrlImagem().subscribe({
+    next: (urls) => {
+      if (urls?.length) {
+        this.imagens.set(urls.reverse());
+        this.startTimer();
+      } else {
+        console.warn('Nenhuma imagem carregada.');
+      }
+    },
+    error: (err) => {
+      console.error('Erro ao carregar imagens:', err);
+    },
+  });
 
-    this.fotosService.getUrlSistema().subscribe({
-      next: (urls) => {
-        if (urls?.length) {
-          this.sistemas.set(urls.reverse());
-        } else {
-          console.warn('Nenhum URL de sistema carregado.');
-        }
-      },
-      error: (err) => {
-        console.error('Erro ao carregar sistemas:', err);
-      },
-    });
-  }
+  this.fotosService.getUrlSistema().subscribe({
+    next: (urls) => {
+      if (urls?.length) {
+        this.sistemas.set(urls.reverse());
+      } else {
+        console.warn('Nenhum URL de sistema carregado.');
+      }
+    },
+    error: (err) => {
+      console.error('Erro ao carregar sistemas:', err);
+    },
+  });
+}
 
   // Navegação entre Sections
 
   private increment() {
-    if (this.indiceSection() + 1 < this.maximoIndiceSection()) {
-      this.indiceSection.update(i => i + 1);
-    }
+  if (this.indiceSection() + 1 < this.maximoIndiceSection()) {
+    this.indiceSection.update(i => i + 1);
   }
+}
 
    private decrement() {
-    if (this.indiceSection() - 1 >0) {
-      this.indiceSection.update(i => i - 1);
-    }
+  if (this.indiceSection() - 1 >= 0) {
+    this.indiceSection.update(i => i - 1);
   }
+}
 // Navegação rápida entre Sections
   private increment10() {
-    if (this.indiceSection() + 10 < this.maximoIndiceSection()) {
-      this.indiceSection.update(i => i + 10);
-    }
+  if (this.indiceSection() + 10 < this.maximoIndiceSection()) {
+    this.indiceSection.update(i => i + 10);
   }
+}
 
    private decrement10() {
-    if (this.indiceSection() - 10 >0) {
-      this.indiceSection.update(i => i - 10);
-    }
+  if (this.indiceSection() - 10 >= 0) {
+    this.indiceSection.update(i => i - 10);
   }
+}
 
 
 
   private avancoCertificados() {
-    this.indiceSection.update((i) =>
-      i >= this.maximoIndiceSection() - 1 ? 0 : i + 1,
-    );
-  }
+  this.indiceSection.update((i) =>
+    i >= this.maximoIndiceSection() - 1 ? 0 : i + 1,
+  );
+}
 
-  // Gerenciamento do timer
-  startTimer() {
-    this.pauseTimer();
-    if (this.maximoIndiceSection() > 0) {
-      this.timerSubscription = timer(3000, 3000).subscribe(() => {
-        this.avancoCertificados();
-      });
-      this.destroyRef.onDestroy(() => this.pauseTimer());
-    }
-  }
-
-  pauseTimer() {
-    if (this.timerSubscription) {
-      this.timerSubscription.unsubscribe();
-      this.timerSubscription = null;
-    }
-  }
-
-  // Abertura do modal
-  openModal(sectionKey: string) {
-    const sectionData = this.sections()[sectionKey];
-    if (!sectionData) {
-      console.warn(`Seção ${sectionKey} não encontrada.`);
-      return;
-    }
-
-    this.currentSection.set({ ...sectionData, key: sectionKey });
-    const modalRef = this.modalService.open(ModalSectionsComponent, {
-      ariaLabelledBy: 'modal-basic-title',
-      size: 'lg',
+// Gerenciamento do timer
+startTimer() {
+  this.pauseTimer();
+  if (this.maximoIndiceSection() > 0) {
+    this.timerSubscription = timer(3000, 3000).subscribe(() => {
+      this.avancoCertificados();
     });
+    this.destroyRef.onDestroy(() => this.pauseTimer());
+  }
+}
 
-    // Passa os dados para o componente do modal
-    modalRef.componentInstance.sectionData = this.currentSection();
+pauseTimer() {
+  if (this.timerSubscription) {
+    this.timerSubscription.unsubscribe();
+    this.timerSubscription = null;
+  }
+}
 
-    modalRef.result.then(
-      (result) => {
-        this.startTimer();
-        console.log('Modal fechado com resultado:', result);
-      },
-      () => {
-        this.startTimer();
-        console.log('Modal descartado.');
-      },
-    );
+// Abertura do modal
+openModal(sectionKey: string) {
+  const sectionData = this.sections()[sectionKey];
+  if (!sectionData) {
+    console.warn(`Seção ${sectionKey} não encontrada.`);
+    return;
   }
 
-  // Manipula eventos do modal
-  modalOpened() {
-    this.pauseTimer();
-  }
+  this.currentSection.set({ ...sectionData, key: sectionKey });
+  const modalRef = this.modalService.open(ModalSectionsComponent, {
+    ariaLabelledBy: 'modal-basic-title',
+    size: 'lg',
+  });
 
-  modalClosed(result: string) {
-    this.startTimer();
-  }
+  // Passa os dados para o componente do modal
+  modalRef.componentInstance.sectionData = this.currentSection();
 
-  // Manipula autenticação
-  handleAuthStateChange(isAuthenticated: boolean) {
-    this.isAuthenticated.set(isAuthenticated);
-  }
+  modalRef.result.then(
+    (result) => {
+      this.startTimer();
+      console.log('Modal fechado com resultado:', result);
+    },
+    () => {
+      this.startTimer();
+      console.log('Modal descartado.');
+    },
+  );
+}
 
-  // Função auxiliar para ngFor com objetos
-  objectKeys(obj: Record<string, any>): string[] {
-    return Object.keys(obj);
-  }
+// Manipula eventos do modal
+modalOpened() {
+  this.pauseTimer();
+}
+
+modalClosed(result: string) {
+  this.startTimer();
+}
+
+// Manipula autenticação
+handleAuthStateChange(isAuthenticated: boolean) {
+  this.isAuthenticated.set(isAuthenticated);
+}
+
+// Função auxiliar para ngFor com objetos
+objectKeys(obj: Record<string, any>): string[] {
+  return Object.keys(obj);
+}
 
 
 
