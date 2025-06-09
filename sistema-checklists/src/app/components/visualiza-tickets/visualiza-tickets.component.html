@@ -95,10 +95,21 @@
         @let sectionKey = objectKeys(sections())[indiceSection() + row + col];
         <div class="col-md-4">
           <div class="card mb-4 box-shadow">
+            
+            
+
+
+
             <div class="card-body">
+              <p>{{ sections()[sectionKey].url }}</p>
+            </div>
+
+
+                        <div class="card-body">
               <p>{{ sections()[sectionKey].url }}</p>
               <button (click)="openModal(sectionKey)" class="btn btn-primary">Ver Detalhes</button>
             </div>
+
 
             <!-- Componente modal, se autenticado -->
             @if (isAuthenticated()) {
