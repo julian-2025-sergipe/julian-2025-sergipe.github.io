@@ -4,6 +4,8 @@ export interface Ticket {
   url_ticket?: string;
 }
 
+//TestScript
+
 export interface Section {
   Comentarios?: string[];
   Funcionalidades?: string[];
@@ -11,6 +13,7 @@ export interface Section {
   Tickets?: (string | Ticket)[];
   url?: string;
   tela?: string;
+  TestScript?: string;
 }
 
 

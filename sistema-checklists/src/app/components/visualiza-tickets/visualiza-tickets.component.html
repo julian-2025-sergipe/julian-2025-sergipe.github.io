@@ -99,8 +99,15 @@
               <div class="card-body">
 
                 <div class="card-body">
+                  <b>Shell (playwright)</b>
+                  <p>{{ sections()[sectionKey].TestScript }}</p>
+                </div>
+
+
+                <div class="card-body">
                   <p>{{ sections()[sectionKey].url }}</p>
                 </div>
+
 
                 @if(getPrimeiroComentario(sectionKey)) {
                 <p>{{ getPrimeiroComentario(sectionKey) }}</p>

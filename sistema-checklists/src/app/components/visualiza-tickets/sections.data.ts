@@ -11,6 +11,8 @@ export interface Section {
   Tickets?: (string | Ticket)[];
   url?: string;
   tela?: string;
+  TestScript?: string;
+
 }
 
 
